@@ -1,8 +1,55 @@
-import React from "react";
+import { useState } from "react";
 import { BeakerIcon } from "@heroicons/react/24/solid";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+
+import useAuth from "../hooks/useAuth";
+
+// form validation
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+
+const schema = yup.object().shape({
+  firstname: yup.string().required("First name is required"),
+  lastname: yup.string().required("Last name is required"),
+  email: yup.string().email().required("Email is required"),
+  password: yup.string().required("Password is required"),
+});
 
 const Register = () => {
+  const { setAuth, setEmail, setFirstName, setLastName, setUserId } = useAuth();
+
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = async (formData) => {
+    // setLoading(true);
+    console.log("clicked submit");
+    console.log("formData: ", formData);
+
+    // const [data, error] = await registerUser(formData);
+    // if (data) {
+    //   setSuccess("User registered successfully");
+    //   navigate("/login", { replace: true });
+    // }
+    // if (error) {
+    //   setError(error.response.data.message);
+    // }
+    // console.log("data: ", data);
+    // console.log("error: ", error);
+    // setLoading(false);
+  };
+
   return (
     <>
       <section className="bg-white">
@@ -55,10 +102,14 @@ const Register = () => {
                 </p>
               </div>
 
-              <form action="#" className="mt-8 grid grid-cols-6 gap-6">
+              {/* Form */}
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="mt-8 grid grid-cols-6 gap-6"
+              >
                 <div className="col-span-6 sm:col-span-3">
                   <label
-                    for="FirstName"
+                    htmlFor="firstname"
                     className="block text-sm font-medium text-gray-700"
                   >
                     First Name
@@ -66,15 +117,16 @@ const Register = () => {
 
                   <input
                     type="text"
-                    id="FirstName"
-                    name="first_name"
+                    id="firstname"
+                    name="firstname"
                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                    {...register("firstname")}
                   />
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
                   <label
-                    for="LastName"
+                    htmlFor="lastname"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Last Name
@@ -82,15 +134,16 @@ const Register = () => {
 
                   <input
                     type="text"
-                    id="LastName"
-                    name="last_name"
+                    id="lastname"
+                    name="lastname"
                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                    {...register("lastname")}
                   />
                 </div>
 
                 <div className="col-span-6">
                   <label
-                    for="Email"
+                    htmlFor="Email"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Email
@@ -101,12 +154,13 @@ const Register = () => {
                     id="Email"
                     name="email"
                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                    {...register("email")}
                   />
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
                   <label
-                    for="Password"
+                    htmlFor="Password"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Password
@@ -117,12 +171,13 @@ const Register = () => {
                     id="Password"
                     name="password"
                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                    {...register("password")}
                   />
                 </div>
-
+                {/* 
                 <div className="col-span-6 sm:col-span-3">
                   <label
-                    for="PasswordConfirmation"
+                    htmlFor="PasswordConfirmation"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Password Confirmation
@@ -134,18 +189,7 @@ const Register = () => {
                     name="password_confirmation"
                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                   />
-                </div>
-
-                <div className="col-span-6">
-                  <label for="MarketingAccept" className="flex gap-4">
-                    <input
-                      type="checkbox"
-                      id="MarketingAccept"
-                      name="marketing_accept"
-                      className="h-5 w-5 rounded-md border-gray-200 bg-white shadow-sm"
-                    />
-                  </label>
-                </div>
+                </div> */}
 
                 <div className="col-span-6">
                   <p className="text-sm text-gray-500">
@@ -162,16 +206,18 @@ const Register = () => {
                 </div>
 
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                  <button className="inline-block shrink-0 rounded-md border border-teal-600 bg-teal-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
+                  <button
+                    className="inline-block shrink-0 rounded-md border border-teal-600 bg-teal-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+                    type="submit"
+                  >
                     Create an account
                   </button>
 
                   <p className="mt-4 text-sm text-gray-500 sm:mt-0">
-                    Already have an account?
+                    Already have an account? &nbsp;
                     <NavLink to="/login" className="text-gray-700 underline">
                       Log in
                     </NavLink>
-                    .
                   </p>
                 </div>
               </form>
