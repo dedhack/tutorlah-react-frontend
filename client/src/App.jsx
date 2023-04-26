@@ -5,6 +5,7 @@ import "./App.css";
 // Components & Pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import RequireAuth from "./components/RequireAuth";
 
 // Context
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
         {/* Protected Routes */}
         <Route element={<RequireAuth />}>{/* Logged in Routes */}</Route>

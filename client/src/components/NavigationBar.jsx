@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 
 const NavigationBar = () => {
   return (
@@ -81,19 +82,19 @@ const NavigationBar = () => {
 
             <div className="flex items-center gap-4">
               <div className="sm:flex sm:gap-4">
-                <a
+                <NavLink
                   className="block rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700"
-                  href="/"
+                  to="/login"
                 >
                   Login
-                </a>
+                </NavLink>
 
-                <a
+                <NavLink
                   className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 transition hover:text-teal-600/75 sm:block"
-                  href="/"
+                  to="/register"
                 >
                   Register
-                </a>
+                </NavLink>
               </div>
 
               <button className="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 md:hidden">
