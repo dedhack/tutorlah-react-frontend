@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 
-const QuestionCard = ({ post }) => {
+const QuestionCard = ({ post, subject }) => {
   // props required:
   // firstname
 
@@ -8,15 +9,13 @@ const QuestionCard = ({ post }) => {
   // content, postId, creation date, comments, solved
 
   return (
-    <article className="rounded-xl border-2 border-gray-100 bg-white">
+    <article className="rounded-xl border-2 border-gray-200 bg-gray-200">
       <div className="flex items-start gap-4 p-4 sm:p-6 lg:p-8">
-        <a href="#" className="block shrink-0">
-          <img
-            alt="Speaker"
-            src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
-            className="h-14 w-14 rounded-lg object-cover"
-          />
-        </a>
+        <img
+          alt="Speaker"
+          src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+          className="h-14 w-14 rounded-lg object-cover"
+        />
 
         <div>
           <h3 className="font-medium sm:text-lg">
@@ -58,16 +57,22 @@ const QuestionCard = ({ post }) => {
               </span>
             </p>
           </div>
+
+          {/* END POST CONTENT */}
+          <div className="flex">
+            <NavLink
+              to={`/subjects/${subject}/${post.id}`}
+              type="button"
+              className="inline-flex justify-center items-center space-x-2 border font-semibold rounded-lg px-6 py-1 leading-5 text-sm
+             border-teal-700 bg-teal-700 text-white hover:text-white hover:bg-teal-600 hover:border-teal-600 focus:ring focus:ring-teal-400 focus:ring-opacity-50 active:bg-teal-700 active:border-teal-700 dark:focus:ring-teal-400 dark:focus:ring-opacity-90"
+            >
+              View
+            </NavLink>
+          </div>
         </div>
       </div>
 
       <div className="flex justify-end">
-        <button
-          type="button"
-          className="inline-flex justify-center items-center space-x-2 border font-semibold rounded-lg px-6 py-1 leading-5 text-sm border-blue-700 bg-blue-700 text-white hover:text-white hover:bg-blue-600 hover:border-blue-600 focus:ring focus:ring-blue-400 focus:ring-opacity-50 active:bg-blue-700 active:border-blue-700 dark:focus:ring-blue-400 dark:focus:ring-opacity-90"
-        >
-          <span>View</span>
-        </button>
         {/* TODO: solved status of post */}
         {/* <strong className="-mb-[2px] -me-[2px] inline-flex items-center gap-1 rounded-ee-xl rounded-ss-xl bg-green-600 px-3 py-1.5 text-white">
           <svg

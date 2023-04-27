@@ -23,7 +23,11 @@ const Subject = () => {
   if (Array.isArray(posts) && posts.length > 0) {
     content = posts.map((post) => {
       console.log("post: ", post);
-      return <QuestionCard post={post} />;
+      return (
+        <div className="py-4">
+          <QuestionCard post={post} subject={subject} />
+        </div>
+      );
     });
   }
 

@@ -10,6 +10,7 @@ import RequireAuth from "./components/RequireAuth";
 import Profile from "./pages/Profile";
 import Subjects from "./pages/Subjects";
 import Subject from "./pages/Subject";
+import IndivPost from "./pages/IndivPost";
 
 // Context
 import useAuth from "./hooks/useAuth";
@@ -34,6 +35,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/subjects" element={<Subjects />} />
           <Route path="/subjects/:subject" element={<Subject />} />
+          <Route path="/subjects/:subject/:postId" element={<IndivPost />} />
         </Route>
         <Route path="/error" element={<Error />} />
       </Routes>
