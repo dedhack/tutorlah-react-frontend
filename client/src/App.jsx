@@ -28,13 +28,13 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/subjects" element={<Subjects />} />
+          <Route path="/subjects/:subject" element={<Subject />} />
 
         {/* Protected Routes */}
         <Route element={<RequireAuth />}>
           {/* Logged in Routes */}
           <Route path="/profile" element={<Profile />} />
-          <Route path="/subjects" element={<Subjects />} />
-          <Route path="/subjects/:subject" element={<Subject />} />
           <Route path="/subjects/:subject/:postId" element={<IndivPost />} />
         </Route>
         <Route path="/error" element={<Error />} />

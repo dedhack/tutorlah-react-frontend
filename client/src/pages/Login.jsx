@@ -2,8 +2,8 @@ import { useState } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import * as yup from "yup";
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
 import useAuth from "../hooks/useAuth";
 import { loginUser } from "../api/userApi";
@@ -162,9 +162,9 @@ const Login = () => {
 
             <p className="text-center text-sm text-gray-500">
               No account?
-              <a className="underline" href="/register">
+              <NavLink className="underline" href="/register">
                 Sign up
-              </a>
+              </NavLink>
             </p>
           </form>
         </div>
