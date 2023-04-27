@@ -5,7 +5,7 @@ import useAuth from "../hooks/useAuth";
 
 import { deletePost } from "../api/subjectApi";
 
-const QuestionCard = ({ post, subject }) => {
+const QuestionCard = ({ post, subject, fetch }) => {
   const { auth, userId } = useAuth();
 
   // props required:
@@ -20,6 +20,7 @@ const QuestionCard = ({ post, subject }) => {
 
     if (data) {
       console.log("data: ", data);
+      fetch();
     }
   };
 

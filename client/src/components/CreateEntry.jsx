@@ -12,8 +12,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 const schema = yup
   .object()
   .shape({
-    title: yup.string().min(5).max(30).required("Title is required"),
-    content: yup.string().min(8).required("Content detail is required"),
+    title: yup.string().min(1).max(30).required("Title is required"),
+    content: yup.string().min(1).required("Content detail is required"),
   })
   .required();
 
@@ -50,6 +50,7 @@ const CreateEntry = ({ btnText, fetch, setPosts }) => {
       console.log("data: ", data);
       fetch();
     }
+    closeModal();
   };
 
   return (
