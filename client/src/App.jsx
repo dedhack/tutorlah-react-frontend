@@ -31,6 +31,7 @@ function App() {
           {/* Logged in Routes */}
           <Route path="/profile" element={<Profile />} />
         </Route>
+        <Route path="/error" element={<Error />} />
       </Routes>
     </>
   );
