@@ -51,7 +51,7 @@ const Login = () => {
       setFirstname(decoded.firstname);
       setLastname(decoded.lastname);
       // TODO: set user authorities
-      navigate("/profile", { replace: true });
+      navigate("/subjects", { replace: true });
     } else if (error) {
       console.log("error: ", error.message);
     }

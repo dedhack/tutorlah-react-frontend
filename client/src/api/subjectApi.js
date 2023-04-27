@@ -8,35 +8,15 @@ const instance = axios.create({
   },
 });
 
-export const getSubjectPosts = async (data, token) => {
+export const getSubjectPosts = async (subject) => {
   try {
-    const response = await instance.get(`/post`, data);
+    const response = await instance.get(`/post/?subject=${subject}`);
     // expecting response.data to be {token: "token"}
     return [response.data, null];
   } catch (error) {
     return [null, error];
   }
 };
-
-// expected response
-// {
-//     "content": [
-//         {
-//             "id": 1,
-//             "title": "Title3",
-//             "content": "content21234",
-//             "creationDateTime": "2023-04-27T16:38:12.489928",
-//             "userId": 202
-//         }
-//     ],
-//     "pageNo": 0,
-//     "pageSize": 10,
-//     "totalElements": 1,
-//     "totalPages": 1,
-//     "last": false
-// }
-
-//
 
 export const loginUser = async (data) => {
   try {

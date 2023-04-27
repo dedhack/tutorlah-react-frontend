@@ -1,14 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
-const QuestionCard = () => {
+const QuestionCard = ({ post }) => {
+  // props required:
+  // firstname
 
-    // props required:
-    // firstname
-
-    // fetch data items
-    // content, postId, creation date, comments, solved
-
-    
+  // fetch data items
+  // content, postId, creation date, comments, solved
 
   return (
     <article className="rounded-xl border-2 border-gray-100 bg-white">
@@ -24,15 +21,11 @@ const QuestionCard = () => {
         <div>
           <h3 className="font-medium sm:text-lg">
             <a href="#" className="hover:underline">
-              Question about Livewire Rendering and Alpine JS
+              {post.title}
             </a>
           </h3>
 
-          <p className="line-clamp-2 text-sm text-gray-700">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus,
-            accusantium temporibus iure delectus ut totam natus nesciunt ex?
-            Ducimus, enim.
-          </p>
+          <p className="line-clamp-2 text-sm text-gray-700">{post.content}</p>
 
           <div className="mt-2 sm:flex sm:items-center sm:gap-2">
             <div className="flex items-center gap-1 text-gray-500">
@@ -51,7 +44,7 @@ const QuestionCard = () => {
                 />
               </svg>
 
-              <p className="text-xs">14 comments</p>
+              {/* <p className="text-xs">14 comments</p> */}
             </div>
 
             <span className="hidden sm:block" aria-hidden="true">
@@ -59,17 +52,24 @@ const QuestionCard = () => {
             </span>
 
             <p className="hidden sm:block sm:text-xs sm:text-gray-500">
-              Posted by
-              <a href="#" className="font-medium underline hover:text-gray-700">
-                John
-              </a>
+              Posted on {post.creationDateTime} by{" "}
+              <span className="font-medium underline hover:text-gray-700">
+                {post.firstname}
+              </span>
             </p>
           </div>
         </div>
       </div>
 
       <div className="flex justify-end">
-        <strong className="-mb-[2px] -me-[2px] inline-flex items-center gap-1 rounded-ee-xl rounded-ss-xl bg-green-600 px-3 py-1.5 text-white">
+        <button
+          type="button"
+          className="inline-flex justify-center items-center space-x-2 border font-semibold rounded-lg px-6 py-1 leading-5 text-sm border-blue-700 bg-blue-700 text-white hover:text-white hover:bg-blue-600 hover:border-blue-600 focus:ring focus:ring-blue-400 focus:ring-opacity-50 active:bg-blue-700 active:border-blue-700 dark:focus:ring-blue-400 dark:focus:ring-opacity-90"
+        >
+          <span>View</span>
+        </button>
+        {/* TODO: solved status of post */}
+        {/* <strong className="-mb-[2px] -me-[2px] inline-flex items-center gap-1 rounded-ee-xl rounded-ss-xl bg-green-600 px-3 py-1.5 text-white">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-4 w-4"
@@ -86,7 +86,7 @@ const QuestionCard = () => {
           </svg>
 
           <span className="text-[10px] font-medium sm:text-xs">Solved!</span>
-        </strong>
+        </strong> */}
       </div>
     </article>
   );
