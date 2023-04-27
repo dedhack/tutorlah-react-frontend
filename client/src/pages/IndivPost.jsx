@@ -16,7 +16,7 @@ const IndivPost = () => {
 
   const fetchPosts = async () => {
     const [data, error] = await getPostById(postId);
-    console.log("data: ", data);
+    console.log("post with comments: ", data);
     if (data) {
       setPosts(data);
       setComments(data.comments);
@@ -51,7 +51,7 @@ const IndivPost = () => {
         {auth ? (
           <CreateEntry
             btnText="Create Comment"
-            setPosts={setPosts}
+            posts={posts}
             fetch={fetchPosts}
           />
         ) : (

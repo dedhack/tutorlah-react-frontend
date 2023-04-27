@@ -25,7 +25,7 @@ const schemaComment = yup
   })
   .required();
 
-const CreateEntry = ({ btnText, fetch, setPosts }) => {
+const CreateEntry = ({ btnText, fetch, posts }) => {
   const { auth, userId } = useAuth();
   const { subject } = useParams();
 
@@ -74,6 +74,7 @@ const CreateEntry = ({ btnText, fetch, setPosts }) => {
         fetch();
       }
     } else if (btnText === "Create Comment") {
+      const postId = posts.id;
       const [data, error] = await createComment(
         newFormData,
         postId,

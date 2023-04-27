@@ -39,15 +39,7 @@ const Subject = () => {
     <div className="container mx-auto">
       <div className="mt-10 flex justify-between max-w-full">
         <h1 className="text-3xl">{subject.toUpperCase()}</h1>
-        {auth ? (
-          <CreateEntry
-            btnText="Create Post"
-            setPosts={setPosts}
-            fetch={fetchPosts}
-          />
-        ) : (
-          ""
-        )}
+        {auth ? <CreateEntry btnText="Create Post" fetch={fetchPosts} /> : ""}
       </div>
       {content}
     </div>
