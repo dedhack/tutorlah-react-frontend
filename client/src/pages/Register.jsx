@@ -14,8 +14,8 @@ import { registerUser } from "../api/userApi";
 const schema = yup.object().shape({
   firstname: yup.string().required("First name is required"),
   lastname: yup.string().required("Last name is required"),
-  email: yup.string().email().required("Email is required"),
-  password: yup.string().required("Password is required"),
+  email: yup.string().email().min(5).required("Email is required"),
+  password: yup.string().min(8).max(30).required("Password is required"),
 });
 
 const Register = () => {

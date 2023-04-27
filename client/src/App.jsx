@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RequireAuth from "./components/RequireAuth";
+import Profile from "./pages/Profile";
 
 // Context
 import useAuth from "./hooks/useAuth";
@@ -26,7 +27,10 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         {/* Protected Routes */}
-        <Route element={<RequireAuth />}>{/* Logged in Routes */}</Route>
+        <Route element={<RequireAuth />}>
+          {/* Logged in Routes */}
+          <Route path="/profile" element={<Profile />} />
+        </Route>
       </Routes>
     </>
   );

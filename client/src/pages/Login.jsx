@@ -1,7 +1,64 @@
-import React from "react";
+import { useState } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import useAuth from "../hooks/useAuth";
+import { loginUser } from "../api/userApi";
+
+const schema = yup
+  .object()
+  .shape({
+    email: yup.string().min(5).max(30).required(),
+    password: yup.string().min(8).max(30).required(),
+  })
+  .required();
 
 const Login = () => {
+  // user auth states
+  const { setAuth, setEmail, setFirstname, setLastname } = useAuth();
+
+  //
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  // react hook form
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  // Submit function
+  const onSubmit = async (formData) => {
+    setLoading(true);
+    console.log("formData: ", formData);
+
+    const [data, error] = await loginUser(formData);
+    if (data) {
+      console.log("data: ", data.token);
+      const decoded = jwt_decode(data.token);
+      console.log("decoded: ", decoded);
+
+      setAuth(data.token);
+      setEmail(decoded.sub);
+      setFirstname(decoded.firstname);
+      setLastname(decoded.lastname);
+      // TODO: set user authorities
+      navigate("/profile", { replace: true });
+    } else if (error) {
+      console.log("error: ", error.message);
+    }
+
+    setLoading(false);
+  };
+
   return (
     <>
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
@@ -11,12 +68,12 @@ const Login = () => {
           </h1>
 
           <p className="mx-auto mt-4 max-w-md text-center text-gray-500">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati
-            sunt dolores deleniti inventore quaerat mollitia?
+            Let's learn together with friends today!
           </p>
 
+          {/* form */}
           <form
-            action=""
+            onSubmit={handleSubmit(onSubmit)}
             className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
           >
             <p className="text-center text-lg font-medium">
@@ -33,7 +90,11 @@ const Login = () => {
                   type="email"
                   className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                   placeholder="Enter email"
+                  {...register("email")}
                 />
+                <p className="text-center text-red-600">
+                  {errors.email?.message}
+                </p>
 
                 <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
                   <svg
@@ -64,7 +125,11 @@ const Login = () => {
                   type="password"
                   className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                   placeholder="Enter password"
+                  {...register("password")}
                 />
+                <p className="text-center text-red-600">
+                  {errors.password?.message}
+                </p>
 
                 <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
                   <svg
@@ -91,16 +156,13 @@ const Login = () => {
               </div>
             </div>
 
-            <NavLink
-              className="block w-full rounded-lg bg-teal-600 px-5 py-3 text-sm font-medium text-white"
-              to="/login"
-            >
+            <button className="block w-full rounded-lg bg-teal-600 px-5 py-3 text-sm font-medium text-white">
               Login
-            </NavLink>
+            </button>
 
             <p className="text-center text-sm text-gray-500">
               No account?
-              <a className="underline" href="">
+              <a className="underline" href="/register">
                 Sign up
               </a>
             </p>
