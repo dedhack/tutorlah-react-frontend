@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import RequireAuth from "./components/RequireAuth";
 import Profile from "./pages/Profile";
 import Subjects from "./pages/Subjects";
+import English from "./pages/English";
 
 // Context
 import useAuth from "./hooks/useAuth";
@@ -32,6 +33,7 @@ function App() {
           {/* Logged in Routes */}
           <Route path="/profile" element={<Profile />} />
           <Route path="/subjects" element={<Subjects />} />
+          <Route path="/subjects/english" element={<English />} />
         </Route>
         <Route path="/error" element={<Error />} />
       </Routes>
