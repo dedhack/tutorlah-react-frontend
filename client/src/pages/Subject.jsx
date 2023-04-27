@@ -32,7 +32,7 @@ const Subject = () => {
       console.log("post: ", post);
       return (
         <div className="py-4">
-          <QuestionCard post={post} subject={subject} />
+          <QuestionCard post={post} subject={subject} fetch={fetchPosts} />
         </div>
       );
     });
@@ -53,7 +53,11 @@ const Subject = () => {
         ) : (
           ""
         )}
-        <CreateEntry btnText="Create Post" />
+        <CreateEntry
+          btnText="Create Post"
+          setPosts={setPosts}
+          fetch={fetchPosts}
+        />
       </div>
       {content}
     </div>

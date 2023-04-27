@@ -11,7 +11,6 @@ const instance = axios.create({
 export const getSubjectPosts = async (subject) => {
   try {
     const response = await instance.get(`/post/?subject=${subject}`);
-    // expecting response.data to be {token: "token"}
     return [response.data, null];
   } catch (error) {
     return [null, error];
@@ -21,9 +20,35 @@ export const getSubjectPosts = async (subject) => {
 export const getPostById = async (id) => {
   try {
     const response = await instance.get(`/post/${id}`);
-    // expecting response.data to be {token: "token"}
     return [response.data, null];
   } catch (error) {
     return [null, error];
   }
 };
+
+export const createPost = async (data, userId, access) => {
+  try {
+    const response = await instance.post(`/post/create/${userId}`, data, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+
+    return [response.data, null];
+  } catch (error) {
+    return [null, error];
+  }
+};
+
+export const deletePost = async(postId, access) =>{
+  try{
+    const response = await instance.delete(`/post/${postId}`, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    return [response.data, null];
+  }catch(error){
+    return [null, error];
+  }
+}

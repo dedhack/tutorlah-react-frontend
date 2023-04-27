@@ -18,7 +18,7 @@ const schema = yup
 
 const Login = () => {
   // user auth states
-  const { setAuth, setEmail, setFirstname, setLastname } = useAuth();
+  const { setAuth, setEmail, setFirstname, setLastname, setUserId } = useAuth();
 
   //
   const navigate = useNavigate();
@@ -50,6 +50,8 @@ const Login = () => {
       setEmail(decoded.sub);
       setFirstname(decoded.firstname);
       setLastname(decoded.lastname);
+      setUserId(decoded.userId);
+
       // TODO: set user authorities
       navigate("/subjects", { replace: true });
     } else if (error) {

@@ -3,6 +3,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
+import { createPost } from "../api/subjectApi";
+
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -15,8 +17,8 @@ const schema = yup
   })
   .required();
 
-const CreateEntry = ({ btnText }) => {
-  const { user_id } = useAuth();
+const CreateEntry = ({ btnText, fetch, setPosts }) => {
+  const { auth, userId } = useAuth();
   const { subject } = useParams();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -40,9 +42,14 @@ const CreateEntry = ({ btnText }) => {
 
   //   Submit function
   const onSubmit = async (formData) => {
-    console.log("formData: ", formData);
-    let data = { ...formData, subject };
-    console.log("formData2: ", data);
+    // console.log("formData: ", formData);
+    let newFormData = { ...formData, subject };
+    console.log("newFormData: ", newFormData);
+    const [data, error] = await createPost(newFormData, userId, auth);
+    if (data) {
+      console.log("data: ", data);
+      fetch();
+    }
   };
 
   return (

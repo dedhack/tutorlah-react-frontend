@@ -1,12 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
+import useAuth from "../hooks/useAuth";
+
+import { deletePost } from "../api/subjectApi";
+
 const QuestionCard = ({ post, subject }) => {
+  const { auth, userId } = useAuth();
+
   // props required:
   // firstname
 
   // fetch data items
   // content, postId, creation date, comments, solved
+
+  const handleDelete = async () => {
+    console.log("clicked delete");
+    const [data, error] = await deletePost(post.id, auth);
+
+    if (data) {
+      console.log("data: ", data);
+    }
+  };
 
   return (
     <article className="rounded-xl border-2 border-gray-200 bg-gray-200">
@@ -59,7 +74,7 @@ const QuestionCard = ({ post, subject }) => {
           </div>
 
           {/* END POST CONTENT */}
-          <div className="flex">
+          <div className="flex space-x-3">
             <NavLink
               to={`/subjects/${subject}/${post.id}`}
               type="button"
@@ -68,6 +83,17 @@ const QuestionCard = ({ post, subject }) => {
             >
               View
             </NavLink>
+            {userId === post.userId ? (
+              <button
+                className="inline-flex justify-center items-center space-x-2 border font-semibold rounded-lg px-6 py-1 leading-5 text-sm
+            border-teal-700 bg-teal-700 text-white hover:text-white hover:bg-teal-600 hover:border-teal-600 focus:ring focus:ring-teal-400 focus:ring-opacity-50 active:bg-teal-700 active:border-teal-700 dark:focus:ring-teal-400 dark:focus:ring-opacity-90"
+                onClick={handleDelete}
+              >
+                Delete
+              </button>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>
