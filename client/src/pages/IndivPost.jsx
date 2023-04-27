@@ -4,22 +4,27 @@ import { useParams } from "react-router-dom";
 import QuestionCard from "../components/QuestionCard";
 import AnswerCard from "../components/AnswerCard";
 
-const IndivPost = () => {
-  const [post, setPost] = useState({});
-  const [comments, setComments] = useState([]);
-  const { postId } = useParams();
+import CreateEntry from "../components/CreateEntry";
+import useAuth from "../hooks/useAuth";
 
-  const fetchPost = async () => {
+const IndivPost = () => {
+  const { auth } = useAuth();
+
+  const [posts, setPosts] = useState({});
+  const [comments, setComments] = useState([]);
+  const { postId, subject } = useParams();
+
+  const fetchPosts = async () => {
     const [data, error] = await getPostById(postId);
     console.log("data: ", data);
     if (data) {
-      setPost(data);
+      setPosts(data);
       setComments(data.comments);
     }
   };
 
   useEffect(() => {
-    fetchPost();
+    fetchPosts();
   }, []);
 
   // comment.email
@@ -41,8 +46,20 @@ const IndivPost = () => {
 
   return (
     <div className="container mx-auto">
+      <div className="mt-10 flex justify-between max-w-full">
+        <h1 className="text-3xl">{subject.toUpperCase()}</h1>
+        {auth ? (
+          <CreateEntry
+            btnText="Create Comment"
+            setPosts={setPosts}
+            fetch={fetchPosts}
+          />
+        ) : (
+          ""
+        )}
+      </div>
       Question:
-      {post ? <QuestionCard post={post} subject={post.subject} /> : null}
+      {posts ? <QuestionCard post={posts} subject={posts.subject} /> : null}
       <div className="">
         Answers
         {content}

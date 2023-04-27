@@ -6,6 +6,7 @@ import { getSubjectPosts } from "../api/subjectApi";
 import { useParams } from "react-router-dom";
 
 import CreateEntry from "../components/CreateEntry";
+import Btn1 from "../components/Btn1";
 
 const Subject = () => {
   const { auth } = useAuth();
@@ -16,10 +17,6 @@ const Subject = () => {
     const [data, error] = await getSubjectPosts(subject);
     console.log("data: ", data);
     if (data) setPosts(data.content);
-  };
-
-  const handleCreatePost = () => {
-    console.log("clicked submit");
   };
 
   useEffect(() => {
@@ -43,20 +40,14 @@ const Subject = () => {
       <div className="mt-10 flex justify-between max-w-full">
         <h1 className="text-3xl">{subject.toUpperCase()}</h1>
         {auth ? (
-          <button
-            type=""
-            className="block rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700"
-          >
-            Create Post
-          </button>
+          <CreateEntry
+            btnText="Create Post"
+            setPosts={setPosts}
+            fetch={fetchPosts}
+          />
         ) : (
           ""
         )}
-        <CreateEntry
-          btnText="Create Post"
-          setPosts={setPosts}
-          fetch={fetchPosts}
-        />
       </div>
       {content}
     </div>

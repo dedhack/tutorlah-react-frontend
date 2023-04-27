@@ -4,15 +4,23 @@ import { useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 import { createPost } from "../api/subjectApi";
+import { createComment } from "../api/commentApi";
 
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-const schema = yup
+const schemaPost = yup
   .object()
   .shape({
     title: yup.string().min(1).max(30).required("Title is required"),
+    content: yup.string().min(1).required("Content detail is required"),
+  })
+  .required();
+
+const schemaComment = yup
+  .object()
+  .shape({
     content: yup.string().min(1).required("Content detail is required"),
   })
   .required();
@@ -23,6 +31,14 @@ const CreateEntry = ({ btnText, fetch, setPosts }) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  // Reusability : Create Post or Create Comment
+  let subHeading = null;
+  if (btnText === "Create Post") {
+    subHeading = "Ask away! Let's find others who can help you.";
+  } else if (btnText === "Create Comment") {
+    subHeading = "Share your knowledge with others!";
+  }
+
   function closeModal() {
     setIsOpen(false);
   }
@@ -31,7 +47,10 @@ const CreateEntry = ({ btnText, fetch, setPosts }) => {
     setIsOpen(true);
   }
 
-  // form validation
+  // form validation for create post
+
+  const schema = btnText === "Create Post" ? schemaPost : schemaComment;
+
   const {
     register,
     handleSubmit,
@@ -43,13 +62,30 @@ const CreateEntry = ({ btnText, fetch, setPosts }) => {
   //   Submit function
   const onSubmit = async (formData) => {
     // console.log("formData: ", formData);
-    let newFormData = { ...formData, subject };
+    const newFormData =
+      btnText === "Create Post" ? { ...formData, subject } : formData;
+
     console.log("newFormData: ", newFormData);
-    const [data, error] = await createPost(newFormData, userId, auth);
-    if (data) {
-      console.log("data: ", data);
-      fetch();
+
+    if (btnText === "Create Post") {
+      const [data, error] = await createPost(newFormData, userId, auth);
+      if (data) {
+        console.log("data: ", data);
+        fetch();
+      }
+    } else if (btnText === "Create Comment") {
+      const [data, error] = await createComment(
+        newFormData,
+        postId,
+        userId,
+        auth
+      );
+      if (data) {
+        console.log("data: ", data);
+        fetch();
+      }
     }
+
     closeModal();
   };
 
@@ -134,25 +170,27 @@ const CreateEntry = ({ btnText, fetch, setPosts }) => {
                   className="space-y-6 text-teal-700"
                 >
                   <div className="p-5 lg:p-6 grow w-full">
-                    <p className="text-gray-600 mb-5">
-                      Ask away! Let's find others who can help you.
-                    </p>
+                    <p className="text-gray-600 mb-5">{subHeading}</p>
                     {/* FORM STARTS */}
 
                     {/* Text Input (small) */}
-                    <div className="space-y-1">
-                      <label htmlFor="title" className="font-medium">
-                        Title
-                      </label>
-                      <input
-                        type="text"
-                        id="title"
-                        name="title"
-                        placeholder="Enter post title"
-                        className="w-full block border placeholder-gray-500 px-3 py-2 leading-5 text-sm rounded-lg border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 "
-                        {...register("title")}
-                      />
-                    </div>
+                    {btnText === "Create Post" ? (
+                      <div className="space-y-1">
+                        <label htmlFor="title" className="font-medium">
+                          Title
+                        </label>
+                        <input
+                          type="text"
+                          id="title"
+                          name="title"
+                          placeholder="Enter post title"
+                          className="w-full block border placeholder-gray-500 px-3 py-2 leading-5 text-sm rounded-lg border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 "
+                          {...register("title")}
+                        />
+                      </div>
+                    ) : (
+                      ""
+                    )}
                     {/* END Text Input (small) */}
 
                     <textarea
