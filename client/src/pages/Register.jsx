@@ -9,6 +9,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
+import { registerUser } from "../api/userApi";
+
 const schema = yup.object().shape({
   firstname: yup.string().required("First name is required"),
   lastname: yup.string().required("Last name is required"),
@@ -17,7 +19,7 @@ const schema = yup.object().shape({
 });
 
 const Register = () => {
-  const { setAuth, setEmail, setFirstName, setLastName, setUserId } = useAuth();
+  const { setAuth, setEmail, setFirstname, setLastname, setUserId } = useAuth();
 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -33,21 +35,22 @@ const Register = () => {
   });
 
   const onSubmit = async (formData) => {
-    // setLoading(true);
+    setLoading(true);
     console.log("clicked submit");
     console.log("formData: ", formData);
 
-    // const [data, error] = await registerUser(formData);
-    // if (data) {
-    //   setSuccess("User registered successfully");
-    //   navigate("/login", { replace: true });
-    // }
-    // if (error) {
-    //   setError(error.response.data.message);
-    // }
-    // console.log("data: ", data);
-    // console.log("error: ", error);
-    // setLoading(false);
+    const [data, error] = await registerUser(formData);
+
+    if (data) {
+      setSuccess("User registered successfully");
+      navigate("/login", { replace: true });
+    }
+    if (error) {
+      setError(error.response.data.message);
+    }
+    console.log("data: ", data);
+    console.log("error: ", error);
+    setLoading(false);
   };
 
   return (
