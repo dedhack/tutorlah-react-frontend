@@ -21,9 +21,18 @@ const NavigationBar = () => {
                 <li>
                   <NavLink
                     className="text-gray-500 transition hover:text-gray-500/75"
-                    to="/"
+                    to="/home"
                   >
-                    About
+                    Home
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    className="text-gray-500 transition hover:text-gray-500/75"
+                    to="/subjects"
+                  >
+                    Subjects
                   </NavLink>
                 </li>
 
@@ -32,43 +41,7 @@ const NavigationBar = () => {
                     className="text-gray-500 transition hover:text-gray-500/75"
                     to="/"
                   >
-                    Careers
-                  </NavLink>
-                </li>
-
-                <li>
-                  <NavLink
-                    className="text-gray-500 transition hover:text-gray-500/75"
-                    to="/"
-                  >
-                    History
-                  </NavLink>
-                </li>
-
-                <li>
-                  <NavLink
-                    className="text-gray-500 transition hover:text-gray-500/75"
-                    to="/"
-                  >
-                    Services
-                  </NavLink>
-                </li>
-
-                <li>
-                  <NavLink
-                    className="text-gray-500 transition hover:text-gray-500/75"
-                    to="/"
-                  >
-                    Projects
-                  </NavLink>
-                </li>
-
-                <li>
-                  <NavLink
-                    className="text-gray-500 transition hover:text-gray-500/75"
-                    to="/"
-                  >
-                    Blog
+                    Questions
                   </NavLink>
                 </li>
               </ul>
