@@ -38,7 +38,7 @@ const IndivPost = () => {
       console.log("comment: ", comment);
       return (
         <div className="py-4">
-          <AnswerCard post={comment} />
+          <AnswerCard comment={comment} fetch={fetchPosts} />
         </div>
       );
     });

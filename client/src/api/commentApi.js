@@ -25,3 +25,16 @@ export const createComment = async (data, postId, userId, access) => {
     return [null, error];
   }
 };
+
+export const deleteComment = async (commentId, access) => {
+  try {
+    const response = await instance.delete(`/comment/${commentId}`, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    return [response.data, null];
+  } catch (error) {
+    return [null, error];
+  }
+};
