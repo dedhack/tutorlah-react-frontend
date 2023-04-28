@@ -40,15 +40,28 @@ export const createPost = async (data, userId, access) => {
   }
 };
 
-export const deletePost = async(postId, access) =>{
-  try{
+export const deletePost = async (postId, access) => {
+  try {
     const response = await instance.delete(`/post/${postId}`, {
       headers: {
         Authorization: `Bearer ${access}`,
       },
     });
     return [response.data, null];
-  }catch(error){
+  } catch (error) {
     return [null, error];
   }
-}
+};
+
+export const updatePost = async (data, postId, access) => {
+  try {
+    const response = await instance.put(`/post/${postId}`, data, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    return [response.data, null];
+  } catch (error) {
+    return [null, error];
+  }
+};

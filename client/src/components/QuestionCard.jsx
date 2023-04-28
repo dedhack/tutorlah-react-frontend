@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import useAuth from "../hooks/useAuth";
 
-import { deletePost } from "../api/subjectApi";
+import { deletePost, updatePost } from "../api/subjectApi";
 
 const QuestionCard = ({ post, subject, fetch }) => {
   const { auth, userId } = useAuth();
@@ -22,6 +22,11 @@ const QuestionCard = ({ post, subject, fetch }) => {
       console.log("data: ", data);
       fetch();
     }
+  };
+
+  const handleUpdate = async () => {
+    console.log("clicked update");
+    const [data, error] = await updatePost(post.id, auth);
   };
 
   return (
@@ -85,13 +90,22 @@ const QuestionCard = ({ post, subject, fetch }) => {
               View
             </NavLink>
             {userId === post.userId ? (
-              <button
-                className="inline-flex justify-center items-center space-x-2 border font-semibold rounded-lg px-6 py-1 leading-5 text-sm
+              <>
+                <button
+                  className="inline-flex justify-center items-center space-x-2 border font-semibold rounded-lg px-6 py-1 leading-5 text-sm
             border-teal-700 bg-teal-700 text-white hover:text-white hover:bg-teal-600 hover:border-teal-600 focus:ring focus:ring-teal-400 focus:ring-opacity-50 active:bg-teal-700 active:border-teal-700 dark:focus:ring-teal-400 dark:focus:ring-opacity-90"
-                onClick={handleDelete}
-              >
-                Delete
-              </button>
+                  onClick={handleUpdate}
+                >
+                  Update
+                </button>
+                <button
+                  className="inline-flex justify-center items-center space-x-2 border font-semibold rounded-lg px-6 py-1 leading-5 text-sm
+            border-teal-700 bg-teal-700 text-white hover:text-white hover:bg-teal-600 hover:border-teal-600 focus:ring focus:ring-teal-400 focus:ring-opacity-50 active:bg-teal-700 active:border-teal-700 dark:focus:ring-teal-400 dark:focus:ring-opacity-90"
+                  onClick={handleDelete}
+                >
+                  Delete
+                </button>
+              </>
             ) : (
               ""
             )}

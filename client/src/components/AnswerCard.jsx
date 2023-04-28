@@ -57,7 +57,7 @@ const AnswerCard = ({ comment, fetch }) => {
               Posted on {comment.creationDateTime} by{" "}
               <span className="font-medium underline hover:text-gray-700">
                 {/* TODO: change to user firstname */}
-                {comment.email}
+                {comment.firstname}
               </span>
             </p>
           </div>
