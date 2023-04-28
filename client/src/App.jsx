@@ -11,6 +11,7 @@ import Profile from "./pages/Profile";
 import Subjects from "./pages/Subjects";
 import Subject from "./pages/Subject";
 import IndivPost from "./pages/IndivPost";
+import Logout from "./pages/Logout";
 
 // Context
 import useAuth from "./hooks/useAuth";
@@ -29,7 +30,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/subjects" element={<Subjects />} />
-          <Route path="/subjects/:subject" element={<Subject />} />
+        <Route path="/subjects/:subject" element={<Subject />} />
+        <Route path="/logout" element={<Logout />} />
 
         {/* Protected Routes */}
         <Route element={<RequireAuth />}>
